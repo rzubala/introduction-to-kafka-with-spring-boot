@@ -1,0 +1,27 @@
+KAFKA_CLUSTER_ID="$(./kafka-storage.sh random-uuid)"
+./kafka-storage.sh  format -t $KAFKA_CLUSTER_ID -c ../config/kraft/server.properties 
+
+./kafka-server-start.sh ../config/kraft/server.properties
+
+./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic my.first.topic
+
+./kafka-console-producer.sh --bootstrap-server localhost:9092 --topic my.first.topic
+
+
+./kafka-topics.sh --bootstrap-server localhost:9092 --list
+./kafka-topics.sh --bootstrap-server localhost:9092 --create --topic my.new.topic
+./kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic my.new.topic
+./kafka-topics.sh --bootstrap-server localhost:9092 --alter --topic my.new.topic --partitions 3
+./kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic my.new.topic
+
+./kafka-topics.sh --bootstrap-server localhost:9092 --create --topic cg.demo.topic --partitions 5
+./kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic cg.demo.topic
+
+./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic cg.demo.topic  --group my.new.group
+./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic cg.demo.topic  --group my.new.group
+
+./kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
+./kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group my.new.group
+./kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group my.new.group --state
+./kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group my.new.group --members
+
