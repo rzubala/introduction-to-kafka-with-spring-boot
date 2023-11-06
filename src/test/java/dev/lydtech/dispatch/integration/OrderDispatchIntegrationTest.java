@@ -24,6 +24,7 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Component;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -51,9 +52,6 @@ public class OrderDispatchIntegrationTest {
     @Autowired
     private KafkaListenerEndpointRegistry registry;
 
-    @Autowired
-    private KafkaTestListener testListener;
-
     @Configuration
     static class TestConfig {
 
@@ -66,6 +64,7 @@ public class OrderDispatchIntegrationTest {
     /**
      * Use this receiver to consume messages from the outbound topics.
      */
+    // @Component
     public static class KafkaTestListener {
         AtomicInteger dispatchPreparingCounter = new AtomicInteger(0);
         AtomicInteger orderDispatchedCounter = new AtomicInteger(0);
@@ -82,6 +81,9 @@ public class OrderDispatchIntegrationTest {
             orderDispatchedCounter.incrementAndGet();
         }
     }
+
+    @Autowired
+    private KafkaTestListener testListener;
 
     @BeforeEach
     public void setUp() {
