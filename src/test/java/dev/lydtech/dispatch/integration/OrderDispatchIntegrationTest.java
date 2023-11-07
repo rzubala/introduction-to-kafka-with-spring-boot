@@ -64,7 +64,6 @@ public class OrderDispatchIntegrationTest {
     /**
      * Use this receiver to consume messages from the outbound topics.
      */
-    // @Component
     public static class KafkaTestListener {
         AtomicInteger dispatchPreparingCounter = new AtomicInteger(0);
         AtomicInteger orderDispatchedCounter = new AtomicInteger(0);
