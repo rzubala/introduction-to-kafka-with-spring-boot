@@ -13,4 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class OrderDispatched {
     private UUID orderId;
+    private UUID processedById;
+    private String notes;
 }
