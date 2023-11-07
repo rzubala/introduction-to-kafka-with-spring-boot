@@ -43,4 +43,5 @@ KAFKA_CLUSTER_ID="$(./kafka-storage.sh random-uuid)"
 {"orderId":"e9885bc6-7b19-11ee-b962-0242ac120002", "item":"item-test"}
 ### final consumers
 ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic order.dispatched
+<br>
 ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic tracking.status
