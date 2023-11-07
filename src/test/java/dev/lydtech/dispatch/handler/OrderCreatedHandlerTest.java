@@ -6,7 +6,8 @@ import dev.lydtech.dispatch.util.TestEventData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static java.util.UUID.randomUUID;
+import java.util.UUID;
+
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -25,18 +26,20 @@ class OrderCreatedHandlerTest {
 
     @Test
     void listen_Success() throws Exception {
+        String key = UUID.randomUUID().toString();
         OrderCreated testEvent = TestEventData.buildOrderCreatedRandomData();
-        handler.listen(testEvent);
-        verify(dispatchServiceMock, times(1)).process(testEvent);
+        handler.listen(0, key, testEvent);
+        verify(dispatchServiceMock, times(1)).process(key, testEvent);
     }
 
     @Test
     public void listen_ServiceThrowsException() throws Exception {
+        String key = UUID.randomUUID().toString();
         OrderCreated testEvent = TestEventData.buildOrderCreatedRandomData();
-        doThrow(new RuntimeException("Service failure")).when(dispatchServiceMock).process(testEvent);
+        doThrow(new RuntimeException("Service failure")).when(dispatchServiceMock).process(key, testEvent);
 
-        handler.listen(testEvent);
+        handler.listen(0, key, testEvent);
 
-        verify(dispatchServiceMock, times(1)).process(testEvent);
+        verify(dispatchServiceMock, times(1)).process(key, testEvent);
     }
 }

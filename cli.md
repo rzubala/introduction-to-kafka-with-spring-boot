@@ -45,3 +45,19 @@ KAFKA_CLUSTER_ID="$(./kafka-storage.sh random-uuid)"
 ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic order.dispatched
 <br>
 ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic tracking.status
+
+## Keys
+### producer with key
+./kafka-console-producer.sh  --topic order.created --bootstrap-server localhost:9092 --property parse.key=true --property key.separator=:
+<br>
+"123":{"orderId":"e9885bc6-7b19-11ee-b962-0242ac120002", "item":"item-test"}
+### consumer with key
+./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic order.dispatched --property print.key=true --property key.separator=:
+### check number of partitions
+./kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic order.created
+### update partitions
+./kafka-topics.sh --bootstrap-server localhost:9092 --alter --topic order.created --partitions 5
+### check consumer groups
+./kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
+<br>
+./kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group dispatch.order.created.consumer
