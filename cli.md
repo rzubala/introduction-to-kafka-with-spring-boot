@@ -61,3 +61,6 @@ KAFKA_CLUSTER_ID="$(./kafka-storage.sh random-uuid)"
 ./kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
 <br>
 ./kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group dispatch.order.created.consumer
+
+# WireMock
+java -jar wiremock-standalone-3.3.1.jar --port 9001
