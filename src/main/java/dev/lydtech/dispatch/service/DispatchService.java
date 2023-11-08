@@ -1,5 +1,6 @@
 package dev.lydtech.dispatch.service;
 
+import dev.lydtech.dispatch.message.DispatchCompleted;
 import dev.lydtech.dispatch.message.DispatchPreparing;
 import dev.lydtech.dispatch.message.OrderCreated;
 import dev.lydtech.dispatch.message.OrderDispatched;
@@ -32,5 +33,8 @@ public class DispatchService {
         kafkaProducer.send(ORDER_DISPATCHED_TOPIC, key, orderDispatched).get();
 
         log.info("Sent message: key: " + key + " - orderId: " + orderCreated.getOrderId() + " - processedById: " + APPLICATION_ID);
+
+        DispatchCompleted dispatchCompleted = DispatchCompleted.builder().orderId(orderCreated.getOrderId()).build();
+        kafkaProducer.send(DISPATCH_TRACKING_TOPIC, key, dispatchCompleted).get();
     }
 }
